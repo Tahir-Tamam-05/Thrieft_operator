@@ -282,7 +282,7 @@ const AdminPage = () => {
                       {donation.status !== "Completed" && (
                         <div className="flex space-x-2">
                           <Select
-                            value={donation.status}
+                            value={donation.status || undefined}
                             onValueChange={(newStatus) => updateDonationStatus(donation.id, newStatus)}
                           >
                             <SelectTrigger className="flex-1">

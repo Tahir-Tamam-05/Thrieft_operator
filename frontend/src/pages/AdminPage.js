@@ -385,7 +385,7 @@ const AdminPage = () => {
                       </div>
                       <div>
                         <Label className="text-sm">Size</Label>
-                        <Select value={newItem.size} onValueChange={(value) => setNewItem({...newItem, size: value})}>
+                        <Select value={newItem.size || undefined} onValueChange={(value) => setNewItem({...newItem, size: value})}>
                           <SelectTrigger>
                             <SelectValue placeholder="Size" />
                           </SelectTrigger>

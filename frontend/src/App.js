@@ -1,51 +1,87 @@
-import { useEffect } from "react";
-import "@/App.css";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+
+// Import components
+import Navbar from "@/components/Navbar";
+import HomePage from "@/pages/HomePage";
+import DonatePage from "@/pages/DonatePage";
+import ShopPage from "@/pages/ShopPage";
+import RecyclingPage from "@/pages/RecyclingPage";
+import DashboardPage from "@/pages/DashboardPage";
+import AdminPage from "@/pages/AdminPage";
+import TrackingPage from "@/pages/TrackingPage";
+
+import "@/App.css";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+function App() {
+  const [impactStats, setImpactStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Fetch impact stats on app load
   useEffect(() => {
-    helloWorldApi();
+    const fetchImpactStats = async () => {
+      try {
+        const response = await axios.get(`${API}/impact-stats`);
+        setImpactStats(response.data);
+      } catch (error) {
+        console.error("Error fetching impact stats:", error);
+        toast.error("Failed to load impact statistics");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Seed mock data first, then fetch stats
+    const initializeApp = async () => {
+      try {
+        await axios.post(`${API}/seed-mock-data`);
+        await fetchImpactStats();
+      } catch (error) {
+        console.error("Error initializing app:", error);
+        setLoading(false);
+      }
+    };
+
+    initializeApp();
   }, []);
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-green-700 font-medium">Loading ThriftLife...</p>
+        </div>
+      </div>
+    );
+  }
 
-function App() {
   return (
-    <div className="App">
+    <div className="App min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <Navbar />
+        <main className="pt-16">
+          <Routes>
+            <Route 
+              path="/" 
+              element={<HomePage impactStats={impactStats} />} 
+            />
+            <Route path="/donate" element={<DonatePage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/recycling" element={<RecyclingPage impactStats={impactStats} />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/track/:trackingId" element={<TrackingPage />} />
+            <Route path="/track" element={<TrackingPage />} />
+          </Routes>
+        </main>
+        <Toaster position="top-right" />
       </BrowserRouter>
     </div>
   );

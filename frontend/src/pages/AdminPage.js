@@ -372,7 +372,7 @@ const AdminPage = () => {
                     <div className="grid grid-cols-3 gap-3">
                       <div>
                         <Label className="text-sm">Category</Label>
-                        <Select value={newItem.category} onValueChange={(value) => setNewItem({...newItem, category: value})}>
+                        <Select value={newItem.category || undefined} onValueChange={(value) => setNewItem({...newItem, category: value})}>
                           <SelectTrigger>
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>

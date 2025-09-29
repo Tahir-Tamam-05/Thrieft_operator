@@ -279,7 +279,7 @@ const ShopPage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Condition
                     </label>
-                    <Select value={filters.condition} onValueChange={(value) => handleFilterChange("condition", value)}>
+                    <Select value={filters.condition || undefined} onValueChange={(value) => handleFilterChange("condition", value || "")}>
                       <SelectTrigger data-testid="condition-filter">
                         <SelectValue placeholder="All Conditions" />
                       </SelectTrigger>

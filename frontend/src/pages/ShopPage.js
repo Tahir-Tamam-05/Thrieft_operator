@@ -243,7 +243,7 @@ const ShopPage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Category
                     </label>
-                    <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+                    <Select value={filters.category || undefined} onValueChange={(value) => handleFilterChange("category", value || "")}>
                       <SelectTrigger data-testid="category-filter">
                         <SelectValue placeholder="All Categories" />
                       </SelectTrigger>

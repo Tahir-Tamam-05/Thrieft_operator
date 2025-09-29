@@ -261,7 +261,7 @@ const ShopPage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Size
                     </label>
-                    <Select value={filters.size} onValueChange={(value) => handleFilterChange("size", value)}>
+                    <Select value={filters.size || undefined} onValueChange={(value) => handleFilterChange("size", value || "")}>
                       <SelectTrigger data-testid="size-filter">
                         <SelectValue placeholder="All Sizes" />
                       </SelectTrigger>

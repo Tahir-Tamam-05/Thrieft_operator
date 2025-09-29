@@ -398,7 +398,7 @@ const AdminPage = () => {
                       </div>
                       <div>
                         <Label className="text-sm">Condition</Label>
-                        <Select value={newItem.condition} onValueChange={(value) => setNewItem({...newItem, condition: value})}>
+                        <Select value={newItem.condition || undefined} onValueChange={(value) => setNewItem({...newItem, condition: value})}>
                           <SelectTrigger>
                             <SelectValue placeholder="Condition" />
                           </SelectTrigger>

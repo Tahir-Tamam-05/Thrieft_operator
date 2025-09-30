@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import api from "./api";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
@@ -16,9 +16,6 @@ import TrackingPage from "@/pages/TrackingPage";
 
 import "@/App.css";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
 function App() {
   const [impactStats, setImpactStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +24,7 @@ function App() {
   useEffect(() => {
     const fetchImpactStats = async () => {
       try {
-        const response = await axios.get(`${API}/impact-stats`);
+        const response = await api.get('/api/impact-stats');
         setImpactStats(response.data);
       } catch (error) {
         console.error("Error fetching impact stats:", error);
@@ -40,7 +37,7 @@ function App() {
     // Seed mock data first, then fetch stats
     const initializeApp = async () => {
       try {
-        await axios.post(`${API}/seed-mock-data`);
+        await api.post('/api/seed-mock-data');
         await fetchImpactStats();
       } catch (error) {
         console.error("Error initializing app:", error);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,9 +23,6 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { format } from "date-fns";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const DonatePage = () => {
   const navigate = useNavigate();
@@ -104,7 +101,7 @@ const DonatePage = () => {
         return;
       }
 
-      const response = await axios.post(`${API}/donations`, {
+      const response = await api.post('/api/donations', {
         ...formData,
         estimated_weight: formData.estimated_weight ? parseFloat(formData.estimated_weight) : null
       });

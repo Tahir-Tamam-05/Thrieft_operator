@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,9 +20,6 @@ import {
   Mail,
   User
 } from "lucide-react";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const TrackingPage = () => {
   const { trackingId: urlTrackingId } = useParams();
@@ -47,7 +44,7 @@ const TrackingPage = () => {
     setLoading(true);
     setSearched(true);
     try {
-      const response = await axios.get(`${API}/donations/${id}`);
+      const response = await api.get(`/api/donations/${id}`);
       setDonation(response.data);
     } catch (error) {
       console.error("Error fetching donation:", error);

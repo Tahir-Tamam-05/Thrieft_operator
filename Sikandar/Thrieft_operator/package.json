@@ -1,0 +1,26 @@
+{
+  "name": "thrieft_operator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "concurrently \"cd backend && ..\\venv\\Scripts\\python server.py\" \"cd frontend && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tahir-Tamam-05/Thrieft_operator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tahir-Tamam-05/Thrieft_operator/issues"
+  },
+  "homepage": "https://github.com/Tahir-Tamam-05/Thrieft_operator#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

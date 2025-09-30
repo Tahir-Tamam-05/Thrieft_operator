@@ -175,6 +175,10 @@ def parse_from_mongo(item):
 async def root():
     return {"message": "Thrift Clothing API - Give Clothes a Second Life!"}
 
+@api_router.get("/health")
+async def health():
+    return {"status": "ok"}
+
 # Donation routes
 @api_router.post("/donations", response_model=DonationRequest)
 async def create_donation_request(donation_data: DonationRequestCreate):
@@ -422,8 +426,8 @@ app.include_router(api_router)
 
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
     allow_methods=["*"],
     allow_headers=["*"],
 )
